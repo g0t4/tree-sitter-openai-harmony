@@ -392,9 +392,6 @@ dist/
 zig-cache/
 zig-out/
 
-# Example dirs
-/examples/*/
-
 # Grammar volatiles
 *.wasm
 *.obj
