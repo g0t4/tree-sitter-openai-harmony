@@ -16,5 +16,8 @@
   "main": "grammar.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.25.10"
   }
 }
