@@ -63,15 +63,16 @@ module.exports = grammar({
       $.start_token, $.header_assistant_commentary_tool_call, $.content_tail),
     message_assistant_commentary_tool_call_call: $ => seq(
       $.start_token, $.header_assistant_commentary_tool_call, $.call_tail),
-    call_tail: $ => seq($.message_token, $.message_content, $.call_token), // FYI <|call|> is mapped to <|end|> when sending next user request turn
+    call_tail: $ => seq($.message_and_content, $.call_token), // FYI <|call|> is mapped to <|end|> when sending next user request turn
     //
     assistant_commentary: $ => seq("commentary ", $.recipient_functions),
     constrain_format: $ => seq($.constrain_token, "json"),
 
     // super common - high level concepts
-    content_tail: $ => seq($.message_token, $.message_content, $.end_token),
+    message_and_content: $ => seq($.message_token, $.message_content), // TODO should I even use this?
+    content_tail: $ => seq($.message_and_content, $.end_token),
     //
-    return_tail: $ => seq($.message_token, $.message_content, $.return_token), // PRN collapse into message_assistant_return?
+    return_tail: $ => seq($.message_and_content, $.return_token), // PRN collapse into message_assistant_return?
     message_assistant_return: $ => seq(
       $.start_token,
       $.header_assistant_final,
