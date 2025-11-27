@@ -22,9 +22,9 @@ module.exports = grammar({
       $.message_assistant_final,
       $.message_assistant_analysis,
       $.message_assistant_commentary_tool_call,
+      // BTW I can keep top level message types PLUS have header types! that way I keep top level useful message grouping... unless I don't have a full message in which case I think get header grouping (if available)!
     )),
 
-    // TODO header => split out header types instead of top level message types? would allow for more flexible parsing later... wouldn't require full message AIO
     header: $ => choice($.header_user, $.header_system, $.header_developer, $.header_tool_result, $.header_assistant),
     //  i.e. $.header_assistant (subdivided), $.header_tool_result
     header_user: $ => $.role_user,
