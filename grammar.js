@@ -51,28 +51,14 @@ module.exports = grammar({
 
     role_tool: $ => seq("functions.", RegExp("[^\s]+")), // ? add?
 
-
     // assistant_channel: $ => choice("analysis", "final", $.assistant_commentary), 
-    message_assistant_analysis: $ => seq(
-      $.start_token,
-      $.header_assistant_analysis,
-      $.message_content_tail
-    ),
-    message_assistant_final: $ => seq(
-      $.start_token,
-      $.header_assistant_final,
-      $.message_content_tail
-    ),
+    message_assistant_analysis: $ => seq($.start_token, $.header_assistant_analysis, $.message_content_tail),
+    message_assistant_final: $ => seq($.start_token, $.header_assistant_final, $.message_content_tail),
+    //
     // - `<|start|>assistant<|channel|>commentary to=functions.get_current_weather <|constrain|>json<|message|>{"location":"San Francisco"}<|call|>`
-    message_assistant_commentary_tool_call: $ => seq(
-      $.start_token,
-      $.header_assistant_commentary_tool_call,
-      $.message_content_tail
-    ),
+    message_assistant_commentary_tool_call: $ => seq($.start_token, $.header_assistant_commentary_tool_call, $.message_content_tail),
     assistant_commentary: $ => seq("commentary ", $.recipient_functions),
     constrain_format: $ => seq($.constrain_token, "json"),
-
-
 
     // super common - high level concepts
     message_content_tail: $ => seq($.message_token, $.message_content, $.end_token),
