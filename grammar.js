@@ -11,7 +11,7 @@ module.exports = grammar({
   name: "harmony",
 
   rules: {
-    messages: $ => choice($.user_message, $.assistant_final),
+    messages: $ => repeat(choice($.user_message, $.assistant_final)),
     // source_file: $ => seq($.start_token, $.end_token),
     user_message: $ => seq(
       $.start_token, $.role_user,
