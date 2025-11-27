@@ -13,20 +13,26 @@ module.exports = grammar({
   rules: {
     // TODO ... explore more testing w.r.t. observation: 
     //   observation? seems like the first entry must match the full file? w/o this I get errors?
-    messages: $ => repeat(choice(
-      $.message_system,
-      $.message_developer,
-      $.message_user,
-      $.message_tool_result,
-      // assistant:
-      $.message_assistant_final,
-      $.message_assistant_analysis,
-      $.message_assistant_commentary_tool_call_end,
-      // decode only:
-      $.message_assistant_commentary_tool_call_call,
-      $.message_assistant_return,
-      // BTW I can keep top level message types PLUS have header types! that way I keep top level useful message grouping... unless I don't have a full message in which case I think get header grouping (if available)!
-    )),
+    messages: $ => repeat($.message),
+
+    // TODO? which $.message definition? emphasize message types (strict) or header types (loose)?
+    // message: $ => choice(
+    //   $.message_system,
+    //   $.message_developer,
+    //   $.message_user,
+    //   $.message_tool_result,
+    //   // assistant:
+    //   $.message_assistant_final,
+    //   $.message_assistant_analysis,
+    //   $.message_assistant_commentary_tool_call_end,
+    //   // decode only:
+    //   $.message_assistant_commentary_tool_call_call,
+    //   $.message_assistant_return,
+    //   // BTW I can keep top level message types PLUS have header types! that way I keep top level useful message grouping... unless I don't have a full message in which case I think get header grouping (if available)!
+    // ),
+    // TODO make message generic?
+    message: $ => seq($.start_token, $.header, $.message_and_content, $.end_tag),
+    end_tag: $ => choice($.end_token, $.return_token, $.call_token), // looser definition too b/c not limiting return/call tokens on end of specific messages
 
     header: $ => choice($.header_user, $.header_system, $.header_developer, $.header_tool_result, $.header_assistant),
     //  i.e. $.header_assistant (subdivided), $.header_tool_result
@@ -69,7 +75,7 @@ module.exports = grammar({
     constrain_format: $ => seq($.constrain_token, "json"),
 
     // super common - high level concepts
-    message_and_content: $ => seq($.message_token, $.message_content), // TODO should I even use this?
+    message_and_content: $ => seq($.message_token, $.message_content), // could happen if <|end|> is frequently missing which probably will happen due to model forgetting... or stop token extraction with llama-server (will result in mostly not seeing end/call/return actually!)
     content_tail: $ => seq($.message_and_content, $.end_token),
     //
     return_tail: $ => seq($.message_and_content, $.return_token), // PRN collapse into message_assistant_return?
