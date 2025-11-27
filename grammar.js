@@ -31,7 +31,9 @@ module.exports = grammar({
     header_system: $ => $.role_system,
     header_developer: $ => $.role_developer,
     header_tool_result: $ => seq($.role_tool, " ", $.recipient_assistant, $.channel_token, "commentary"),
-    // header_assistant: $ => $. // TODO
+    header_assistant: $ => "TODO",
+    header_assistant_analysis: $ => seq($.role_assistant, $.channel_token, "analysis"),
+
 
     // source_file: $ => seq($.start_token, $.end_token),
     message_user: $ => seq($.start_token, $.header_user, $.message_content_tail),
@@ -47,7 +49,7 @@ module.exports = grammar({
     // assistant_channel: $ => choice("analysis", "final", $.assistant_commentary), 
     message_assistant_analysis: $ => seq(
       $.start_token,
-      $.role_assistant, $.channel_token, "analysis",
+      $.header_assistant_analysis,
       $.message_content_tail
     ),
     message_assistant_final: $ => seq(
