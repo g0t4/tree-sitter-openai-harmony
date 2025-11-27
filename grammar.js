@@ -31,7 +31,11 @@ module.exports = grammar({
     header_system: $ => $.role_system,
     header_developer: $ => $.role_developer,
     header_tool_result: $ => seq($.role_tool, " ", $.recipient_assistant, $.channel_token, "commentary"),
-    header_assistant: $ => "TODO",
+    //
+    // assistant headers:
+    header_assistant: $ => choice(
+      $.header_assistant_analysis, $.header_assistant_final, $.header_assistant_commentary_tool_call
+    ),
     header_assistant_analysis: $ => seq($.role_assistant, $.channel_token, "analysis"),
     header_assistant_final: $ => seq($.role_assistant, $.channel_token, "final"),
     header_assistant_commentary_tool_call: $ => seq(
