@@ -31,8 +31,8 @@ module.exports = grammar({
     //   // BTW I can keep top level message types PLUS have header types! that way I keep top level useful message grouping... unless I don't have a full message in which case I think get header grouping (if available)!
     // ),
     // TODO make message generic?
-    message: $ => seq($.start_token, $.header, $.message_and_content, $.end_tag),
-    end_tag: $ => choice($.end_token, $.return_token, $.call_token), // looser definition too b/c not limiting return/call tokens on end of specific messages
+    message: $ => seq($.start_token, $.header, $.message_and_content, $.final_token),
+    final_token: $ => choice($.end_token, $.return_token, $.call_token), // looser definition too b/c not limiting return/call tokens on end of specific messages
 
     header: $ => choice($.header_user, $.header_system, $.header_developer, $.header_tool_result, $.header_assistant),
     //  i.e. $.header_assistant (subdivided), $.header_tool_result
