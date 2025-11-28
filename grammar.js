@@ -57,11 +57,11 @@ module.exports = grammar({
     //
     // assistant headers:
     header_assistant: $ => choice(
-      $.header_assistant_analysis, $.header_assistant_final, $.header_assistant_commentary_tool_call
+      $.header_assistant_analysis, $.header_assistant_final, $.header_assistant_commentary
     ),
     header_assistant_analysis: $ => seq($.role_assistant, $.channel_token, "analysis"),
     header_assistant_final: $ => seq($.role_assistant, $.channel_token, "final"),
-    header_assistant_commentary_tool_call: $ => seq(
+    header_assistant_commentary: $ => seq(
       $.role_assistant, $.channel_token, $.assistant_commentary, optional($.assistant_commentary),
     ),
     // plausible model responses to typical prefill: <|start|>assistant
@@ -84,9 +84,9 @@ module.exports = grammar({
     //
     // - `<|start|>assistant<|channel|>commentary to=functions.get_current_weather <|constrain|>json<|message|>{"location":"San Francisco"}<|call|>`
     message_assistant_commentary_tool_call_end: $ => seq(
-      $.start_token, $.header_assistant_commentary_tool_call, $.content_tail),
+      $.start_token, $.header_assistant_commentary, $.content_tail),
     message_assistant_commentary_tool_call_call: $ => seq(
-      $.start_token, $.header_assistant_commentary_tool_call, $.call_tail),
+      $.start_token, $.header_assistant_commentary, $.call_tail),
     call_tail: $ => seq($.message_and_content, $.call_token), // FYI <|call|> is mapped to <|end|> when sending next user request turn
     //
     assistant_commentary: $ => seq("commentary ", $.recipient_functions),
