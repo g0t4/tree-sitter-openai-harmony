@@ -21,11 +21,10 @@ module.exports = grammar({
   rules: {
     //   observation? seems like the first entry must match the full file? w/o this I get errors?
     source_file: $ => seq(
-      optional($.model_response_to_prefill),
+      optional($.model_response_to_start_assistant_prefill),
       repeat($.message)),
 
-    model_response_to_prefill: $ => seq(
-      // typical response after `<|start|>assistant` prefill
+    model_response_to_start_assistant_prefill: $ => seq(
       choice($.channel_analysis, $.channel_final, $.channel_commentary_tool_call),
       $.message_and_content,
       $.final_token
