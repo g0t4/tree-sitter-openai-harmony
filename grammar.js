@@ -26,7 +26,7 @@ module.exports = grammar({
       repeat($.message)),
 
     model_response_to_start_assistant_prefill: $ => seq(
-      choice($.channel_analysis, $.channel_final, $.channel_commentary_tool_call),
+      choice($.prefill_channel_analysis, $.prefill_channel_final, $.prefill_channel_commentary_tool_call),
       $.message_and_content,
       $.final_token
     ),
@@ -42,15 +42,16 @@ module.exports = grammar({
 
     header_assistant: $ => choice($.header_assistant_analysis, $.header_assistant_final, $.header_assistant_commentary),
     header_assistant_analysis: $ => seq("assistant", $.channel_token, "analysis"),
-    channel_analysis: $ => seq($.channel_token, "analysis"),
     header_assistant_final: $ => seq("assistant", $.channel_token, "final"),
-    channel_final: $ => seq($.channel_token, "final"),
     header_assistant_commentary: $ => seq(
       "assistant", $.channel_token, $.assistant_commentary, optional($.assistant_commentary),
       // ? does this work for preamble which is assistant_commentary w/o the to=functions.___ and instead just a regular message ending
       // - `<|start|>assistant<|channel|>commentary to=functions.get_current_weather <|constrain|>json<|message|>{"location":"San Francisco"}<|call|>`
     ),
-    channel_commentary_tool_call: $ => seq($.channel_token, $.assistant_commentary, optional($.assistant_commentary)),
+
+    prefill_channel_analysis: $ => seq($.channel_token, "analysis"),
+    prefill_channel_final: $ => seq($.channel_token, "final"),
+    prefill_channel_commentary_tool_call: $ => seq($.channel_token, $.assistant_commentary, optional($.assistant_commentary)),
 
     // tool results
     // <|start|>functions.get_current_weather to=assistant<|channel|>commentary<|message|>{"sunny": true, "temperature": 20}<|end|>
