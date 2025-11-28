@@ -94,7 +94,13 @@ module.exports = grammar({
       "commentary",
       optional(seq(/\s+/, $.recipient_functions, optional($.constrain_format)))
     ),
-    constrain_format: $ => seq($.constrain_token, /[^<]+/),
+    constrain_format: $ => seq(
+      $.constrain_token,
+      repeat1(choice(
+        /[^<]+/,
+        /</ // force decision on single < which means it is allowed too just only one char at a time
+      )),
+    ),
 
     // super common - high level concepts
     message_and_content: $ => seq($.message_token, $.message_content), // could happen if <|end|> is frequently missing which probably will happen due to model forgetting... or stop token extraction with llama-server (will result in mostly not seeing end/call/return actually!)
