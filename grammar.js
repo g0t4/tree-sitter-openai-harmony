@@ -40,9 +40,7 @@ module.exports = grammar({
     header_system: $ => "system",
     header_developer: $ => "developer",
 
-    header_assistant: $ => choice(
-      $.header_assistant_analysis, $.header_assistant_final, $.header_assistant_commentary
-    ),
+    header_assistant: $ => choice($.header_assistant_analysis, $.header_assistant_final, $.header_assistant_commentary),
     header_assistant_analysis: $ => seq("assistant", $.channel_token, "analysis"),
     channel_analysis: $ => seq($.channel_token, "analysis"),
     header_assistant_final: $ => seq("assistant", $.channel_token, "final"),
