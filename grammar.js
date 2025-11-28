@@ -14,6 +14,7 @@ module.exports = grammar({
     $.anything_without_hoovering_tags,
     $.header_assistant, // not an actual node, just use child header node types directly
     $.header,
+    $.final_token,
   ],
 
   // FYI extras: [\s] is default... allows for whitespace around tokens unless clear it to force exact matches below...
