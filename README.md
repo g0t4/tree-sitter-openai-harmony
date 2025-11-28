@@ -29,3 +29,63 @@ A tree-sitter parser for OpenAI's [harmony response format](https://github.com/o
 
 - https://github.com/openai/harmony
 - https://cookbook.openai.com/articles/openai-harmony
+
+
+## tree-sitter CLI
+```fish
+# completion
+npx tree-sitter-cli complete --shell fish > ~/.config/fish/completions/tree-sitter.fish
+
+# developing grammar
+tree-sitter generate
+tree-sitter build
+
+# test parsing:
+tree-sitter parse test.harmony
+
+# test queries!
+tree-sitter query queries/highlights.scm test.harmony
+```
+
+
+
+### tree-sitter highlight
+
+Docs: https://tree-sitter.github.io/tree-sitter/3-syntax-highlighting.html
+
+First, create user level config:
+```fish
+tree-sitter init-config 
+# creates ~/.config/tree-sitter/config.json
+```
+```
+
+# parser-directories must be a _PARENT_ directory of your grammar repo:
+```json
+{
+    "parser-directories": [
+        "~/repos/github/g0t4"
+    ],
+    "theme": { ... }
+}
+```
+
+```fish
+# test it recognizes grammar(s)
+tree-sitter dump-languages
+# empty == BAD
+
+# grammar repo needs language config:
+cat tree-sitter.json
+# https://tree-sitter.github.io/tree-sitter/3-syntax-highlighting.html#language-configuration
+
+# 
+mkdir queries
+echo "(start_token) @type" > queries/highlights.scm
+# use a builtin 
+
+
+tree-sitter highlight test.harmony
+```
+
+
