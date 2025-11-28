@@ -115,14 +115,20 @@ module.exports = grammar({
     return_token: $ => "<|return|>", // instead of <|end|> on a final message
     call_token: $ => "<|call|>", // assistant commentary channel => tool request only
 
-    // TODO could break out commentary into own rule that has recipient
 
 
-    // full messages:
-    //   <|start|>{header}<|message|>{content}<|end|>
-    //   TODO redo with $.header
-    // full_message: $ => seq($.start_token, $.header, $.message_token, $.message_content $.end_token)
-    message_content: $ => /[a-zA-Z0-9,#:\-\.\?\s\{\}]*/, // or? until <|end|>/<|return|>? or (or maybe <|start|>?
+    // message_content: $ => /[a-zA-Z0-9,#:\-\.\?\s\{\}]*/, // or? until <|end|>/<|return|>? or (or maybe <|start|>?
+    message_content: $ => repeat1($.content_char),
+    content_char: $ => token(prec(-9,
+      choice(
+        /[a-zA-Z0-9,#:\-\.\?\s\{\}\_\|>]+/, // todo does * (0+) vs + (1+) ? is there an "empty" match? not sure that would matter
+        /[<]/, // treat as single token to trigger a decision between continuing contents and the end/return/call tags... IIUC how tree-sitter works :)... I am still very new to this!!
+      )
+    )),
+    // FYI to test nested non-end tags:
+    //   tree-sitter generate && time tree-sitter parse examples/fleshing/content_has_tag.harmony
+
+
 
     // * recipients
     recipient_assistant: $ => "to=assistant",
