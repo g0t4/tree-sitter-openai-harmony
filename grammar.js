@@ -13,6 +13,7 @@ module.exports = grammar({
   inline: $ => [
     $.anything_without_hoovering_tags,
     $.header_assistant, // not an actual node, just use child header node types directly
+    $.message_and_content,
   ],
 
   // FYI extras: [\s] is default... allows for whitespace around tokens unless clear it to force exact matches below...
@@ -33,6 +34,7 @@ module.exports = grammar({
 
     // compositional messages:
     message: $ => seq($.start_token, $.header, $.message_and_content, $.final_token),
+    message_and_content: $ => seq($.message_token, $.message_content), // could happen if <|end|> is frequently missing which probably will happen due to model forgetting... or stop token extraction with llama-server (will result in mostly not seeing end/call/return actually!)
     final_token: $ => choice($.end_token, $.return_token, $.call_token), // looser definition too b/c not limiting return/call tokens on end of specific messages
 
     header: $ => choice($.header_system, $.header_developer, $.header_user, $.header_assistant, $.header_tool_result),
@@ -75,7 +77,6 @@ module.exports = grammar({
       /</ // force decision on single < which means it is allowed too just only one char at a time
     )),
 
-    message_and_content: $ => seq($.message_token, $.message_content), // could happen if <|end|> is frequently missing which probably will happen due to model forgetting... or stop token extraction with llama-server (will result in mostly not seeing end/call/return actually!)
 
     // * special tokens
     // FYI might want these to be lower priority than many of the message structures above so if there are extraneous instances in message contents that won't take precedence?
