@@ -122,7 +122,7 @@ module.exports = grammar({
     //   <|start|>{header}<|message|>{content}<|end|>
     //   TODO redo with $.header
     // full_message: $ => seq($.start_token, $.header, $.message_token, $.message_content $.end_token)
-    message_content: $ => RegExp("[a-zA-Z\?\s]*"), // until <|end|>/<|return|>? or (or maybe <|start|>?
+    message_content: $ => RegExp("[a-zA-Z0-9,#:\\-\\.\\?\\s]*"), // or? until <|end|>/<|return|>? or (or maybe <|start|>?
 
     // * recipients
     recipient_assistant: $ => "to=assistant",
