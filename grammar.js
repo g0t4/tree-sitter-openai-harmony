@@ -63,6 +63,7 @@ module.exports = grammar({
     header_assistant_final: $ => seq($.role_assistant, $.channel_token, "final"),
     header_assistant_commentary: $ => seq(
       $.role_assistant, $.channel_token, $.assistant_commentary, optional($.assistant_commentary),
+      // ? does this work for preamble which is assistant_commentary w/o the to=functions.___ and instead just a regular message ending
     ),
     // plausible model responses to typical prefill: <|start|>assistant
     channel_analysis: $ => seq($.channel_token, "analysis"),
