@@ -89,7 +89,12 @@ module.exports = grammar({
       $.start_token, $.header_assistant_commentary, $.call_tail),
     call_tail: $ => seq($.message_and_content, $.call_token), // FYI <|call|> is mapped to <|end|> when sending next user request turn
     //
-    assistant_commentary: $ => seq("commentary ", $.recipient_functions),
+    assistant_commentary: $ => seq(
+      "commentary",
+      optional(seq(" ", $.recipient_functions,
+        optional(seq($.constrain_token, "json"))
+      ))
+    ),
     constrain_format: $ => seq($.constrain_token, "json"),
 
     // super common - high level concepts
@@ -148,7 +153,7 @@ module.exports = grammar({
     // * recipients
     recipient_assistant: $ => "to=assistant",
     // function_name: $ => "" ,
-    recipient_functions: $ => seq("to=functions.", RegExp("[^\s]+")),
+    recipient_functions: $ => seq("to=functions.", RegExp("[^\s<]+")),
 
 
     // roles
