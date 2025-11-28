@@ -121,6 +121,7 @@ module.exports = grammar({
 
 
     // TODO what is up with whitespace allowed between tokens normally? ... I don't want to do that b/c then I might trim critical spacing before/after in content?
+    //    seems like spacing is allowed, i.e. assistant_commentary => the to=functions.name<SPACE><|message|> works even though I didn't define that in my grammar
     //   use it on content_char below
 
     // message_content: $ => /[a-zA-Z0-9,#:\-\.\?\s\{\}]*/, // or? until <|end|>/<|return|>? or (or maybe <|start|>?
@@ -152,7 +153,7 @@ module.exports = grammar({
     // * recipients
     recipient_assistant: $ => "to=assistant",
     // function_name: $ => "" ,
-    recipient_functions: $ => seq("to=functions.", RegExp("[^\s<]+")), // TODO? should I allow < in the format too but just trigger stop on it like message_content?
+    recipient_functions: $ => seq("to=functions.", /[^\s<]+/), // TODO? should I allow < in the format too but just trigger stop on it like message_content?
 
 
     // roles
