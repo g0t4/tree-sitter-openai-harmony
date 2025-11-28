@@ -44,6 +44,7 @@ module.exports = grammar({
     header_assistant_analysis: $ => seq("assistant", $.channel_token, "analysis"),
     header_assistant_final: $ => seq("assistant", $.channel_token, "final"),
     header_assistant_commentary: $ => seq(
+      // TODO fix double assistant_commentary: one is a mistake clearly, what was this supposed to be?
       "assistant", $.channel_token, $.assistant_commentary, optional($.assistant_commentary),
       // ? does this work for preamble which is assistant_commentary w/o the to=functions.___ and instead just a regular message ending
       // - `<|start|>assistant<|channel|>commentary to=functions.get_current_weather <|constrain|>json<|message|>{"location":"San Francisco"}<|call|>`
@@ -60,8 +61,6 @@ module.exports = grammar({
     role_tool: $ => seq("functions.", field("function_name", $.function_name)),
     function_name: $ => /[^\s<]+/,
 
-    call_tail: $ => seq($.message_and_content, $.call_token), // FYI <|call|> is mapped to <|end|> when sending next user request turn
-    //
     assistant_commentary: $ => seq(
       "commentary",
       optional(seq(/\s+/, $.recipient_functions, optional($.constrain_format)))
