@@ -53,9 +53,9 @@ module.exports = grammar({
 
     header: $ => choice($.header_user, $.header_system, $.header_developer, $.header_tool_result, $.header_assistant),
     //  i.e. $.header_assistant (subdivided), $.header_tool_result
-    header_user: $ => $.role_user,
-    header_system: $ => $.role_system,
-    header_developer: $ => $.role_developer,
+    header_user: $ => "user",
+    header_system: $ => "system",
+    header_developer: $ => "developer",
     header_tool_result: $ => seq($.role_tool, " ", $.recipient_assistant, $.channel_token, "commentary"),
     recipient_assistant: $ => "to=assistant",
     //
@@ -165,9 +165,6 @@ module.exports = grammar({
 
 
     // roles
-    role_system: $ => "system",
-    role_developer: $ => "developer",
-    role_user: $ => "user",
     role_assistant: $ => "assistant",
 
     // header: $ => RegExp(".*"),
