@@ -94,7 +94,7 @@ module.exports = grammar({
       "commentary",
       optional(seq(/\s+/, $.recipient_functions, optional($.constrain_format)))
     ),
-    constrain_format: $ => seq($.constrain_token, "json"),
+    constrain_format: $ => seq($.constrain_token, /[^<]+/),
 
     // super common - high level concepts
     message_and_content: $ => seq($.message_token, $.message_content), // could happen if <|end|> is frequently missing which probably will happen due to model forgetting... or stop token extraction with llama-server (will result in mostly not seeing end/call/return actually!)
@@ -152,7 +152,7 @@ module.exports = grammar({
     // * recipients
     recipient_assistant: $ => "to=assistant",
     // function_name: $ => "" ,
-    recipient_functions: $ => seq("to=functions.", RegExp("[^\s<]+")),
+    recipient_functions: $ => seq("to=functions.", RegExp("[^\s<]+")), // TODO? should I allow < in the format too but just trigger stop on it like message_content?
 
 
     // roles
