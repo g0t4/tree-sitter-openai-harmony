@@ -35,16 +35,11 @@ module.exports = grammar({
     message: $ => seq($.start_token, $.header, $.message_and_content, $.final_token),
     final_token: $ => choice($.end_token, $.return_token, $.call_token), // looser definition too b/c not limiting return/call tokens on end of specific messages
 
+    // * HEADERS
     header: $ => choice($.header_system, $.header_developer, $.header_user, $.header_assistant, $.header_tool_result),
-    //  i.e. $.header_assistant (subdivided), $.header_tool_result
     header_user: $ => "user",
     header_system: $ => "system",
     header_developer: $ => "developer",
-
-    // tool results
-    header_tool_result: $ => seq($.role_tool, " ", $.recipient_assistant, $.channel_token, "commentary"),
-    recipient_assistant: $ => "to=assistant",
-    // <|start|>functions.get_current_weather to=assistant<|channel|>commentary<|message|>{"sunny": true, "temperature": 20}<|end|>
 
     // assistant
     header_assistant: $ => choice(
@@ -61,6 +56,11 @@ module.exports = grammar({
     channel_analysis: $ => seq($.channel_token, "analysis"),
     channel_final: $ => seq($.channel_token, "final"),
     channel_commentary_tool_call: $ => seq($.channel_token, $.assistant_commentary, optional($.assistant_commentary)),
+
+    // tool results
+    header_tool_result: $ => seq($.role_tool, " ", $.recipient_assistant, $.channel_token, "commentary"),
+    recipient_assistant: $ => "to=assistant",
+    // <|start|>functions.get_current_weather to=assistant<|channel|>commentary<|message|>{"sunny": true, "temperature": 20}<|end|>
 
 
     role_tool: $ => seq("functions.", /[^\s]+/), // ? add?
