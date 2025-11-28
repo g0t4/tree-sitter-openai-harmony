@@ -405,4 +405,7 @@ zig-out/
 # src - for my use case I don't need to commit src dir, I might add this later if it would be useful for other people to consume
 src/
 
+# wes added:
+*.dylib.dSYM
+
 # END tree-sitter ignores
