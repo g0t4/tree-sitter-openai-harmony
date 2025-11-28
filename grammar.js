@@ -88,7 +88,7 @@ module.exports = grammar({
     return_token: $ => "<|return|>", // instead of <|end|> on a final message
     call_token: $ => "<|call|>", // assistant commentary channel => tool request only
 
-    message_content: $ => prec(-9, $.text),
+    message_content: $ => prec(-9, field("contents", $.text)),
   },
 });
 
