@@ -35,7 +35,7 @@ module.exports = grammar({
     message: $ => seq($.start_token, $.header, $.message_token, $.message_content, $.final_token),
     final_token: $ => choice($.end_token, $.return_token, $.call_token), // looser definition too b/c not limiting return/call tokens on end of specific messages
 
-    header: $ => choice($.header_system, $.header_developer, $.header_user, $.header_assistant, $.header_tool_result),
+    header: $ => field("header", choice($.header_system, $.header_developer, $.header_user, $.header_assistant, $.header_tool_result)),
     header_user: $ => "user",
     header_system: $ => "system",
     header_developer: $ => "developer",
