@@ -13,7 +13,15 @@ module.exports = grammar({
   rules: {
     // TODO ... explore more testing w.r.t. observation: 
     //   observation? seems like the first entry must match the full file? w/o this I get errors?
-    messages: $ => repeat1($.message),
+    source_file: $ => seq(
+      optional($.model_response_to_prefill),
+      repeat($.message)),
+
+    model_response_to_prefill: $ => seq(
+      choice($.channel_analysis, $.channel_final, $.channel_commentary_tool_call),
+      $.message_and_content,
+      $.final_token
+    ),
 
     // TODO? which $.message definition? emphasize message types (strict) or header types (loose)?
     // TODO message types (strict):
@@ -51,6 +59,10 @@ module.exports = grammar({
     header_assistant_commentary_tool_call: $ => seq(
       $.role_assistant, $.channel_token, $.assistant_commentary, optional($.assistant_commentary),
     ),
+    // plausible model responses to typical prefill: <|start|>assistant
+    channel_analysis: $ => seq($.channel_token, "analysis"),
+    channel_final: $ => seq($.channel_token, "final"),
+    channel_commentary_tool_call: $ => seq($.channel_token, $.assistant_commentary, optional($.assistant_commentary)),
 
     message_user: $ => seq($.start_token, $.header_user, $.content_tail),
     message_system: $ => seq($.start_token, $.header_system, $.content_tail),
