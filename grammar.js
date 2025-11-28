@@ -57,7 +57,7 @@ module.exports = grammar({
     // <|start|>functions.get_current_weather to=assistant<|channel|>commentary<|message|>{"sunny": true, "temperature": 20}<|end|>
     header_tool_result: $ => seq($.role_tool, " ", $.recipient_assistant, $.channel_token, "commentary"),
     recipient_assistant: $ => "to=assistant",
-    role_tool: $ => seq("functions.", $.function_name), // ? add?
+    role_tool: $ => seq("functions.", field("function_name", $.function_name)),
     function_name: $ => /[^\s<]+/,
 
     call_tail: $ => seq($.message_and_content, $.call_token), // FYI <|call|> is mapped to <|end|> when sending next user request turn
@@ -66,7 +66,7 @@ module.exports = grammar({
       "commentary",
       optional(seq(/\s+/, $.recipient_functions, optional($.constrain_format)))
     ),
-    recipient_functions: $ => seq("to=functions.", $.function_name),
+    recipient_functions: $ => seq("to=functions.", field("function_name", $.function_name)),
     constrain_format: $ => seq(
       $.constrain_token,
       $.anything_without_hoovering_tags
