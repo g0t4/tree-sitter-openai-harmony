@@ -120,6 +120,7 @@ module.exports = grammar({
     //   use it on content_char below
 
     // message_content: $ => /[a-zA-Z0-9,#:\-\.\?\s\{\}]*/, // or? until <|end|>/<|return|>? or (or maybe <|start|>?
+    // FYI if you have issues, you can go back to a nested rule like content_char (old name)... where you take token(...) out of the message_content's repeat and put into own rule
     message_content: $ => repeat1(token(prec(-9,
       choice(
         // /[a-zA-Z0-9,#:\-\.\?\s\{\}\_\|>]+/, // todo does * (0+) vs + (1+) ? is there an "empty" match? not sure that would matter
@@ -127,6 +128,18 @@ module.exports = grammar({
         /[<]/, // treat as single token to trigger a decision between continuing contents and the end/return/call tags... IIUC how tree-sitter works :)... I am still very new to this!!
       )
     ))),
+    // OLD split approach (below)... nuke if things work out with inlined above...
+    //   token() IIUC still triggers a "decision point" when inlined (like with split apart into separate rule)
+    //   ALSO FYI I found this pattern in lua's grammar for strings which is what I suspected might be like my scenario! 
+    //   https://github.com/tree-sitter-grammars/tree-sitter-lua/blob/d760230/grammar.js#L391-L417
+    // message_content: $ => repeat1($.content_char),
+    // content_char: $ => token(prec(-9,
+    //   choice(
+    //     // /[a-zA-Z0-9,#:\-\.\?\s\{\}\_\|>]+/, // todo does * (0+) vs + (1+) ? is there an "empty" match? not sure that would matter
+    //     /[^<]+/, // litearlly allow anything else (not <)
+    //     /[<]/, // treat as single token to trigger a decision between continuing contents and the end/return/call tags... IIUC how tree-sitter works :)... I am still very new to this!!
+    //   )
+    // )),
     // FYI to test nested non-end tags:
     //   tree-sitter generate && time tree-sitter parse examples/fleshing/content_has_tag.harmony
 
