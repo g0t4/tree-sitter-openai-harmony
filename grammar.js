@@ -27,8 +27,7 @@ module.exports = grammar({
 
     model_response_to_start_assistant_prefill: $ => seq(
       choice($.prefill_channel_analysis, $.prefill_channel_final, $.prefill_channel_commentary_tool_call),
-      $.message_token, $.message_content,
-      $.final_token
+      $.message_token, $.message_content, $.final_token,
     ),
 
     // compositional messages:
