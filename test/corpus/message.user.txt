@@ -8,5 +8,5 @@ User message
     (start_token)
     header: (header_user)
     (message_token)
-    content: (text)
+    contents: (text)
     (end_token)))
