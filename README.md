@@ -107,3 +107,23 @@ tree-sitter highlight test.harmony
 ```
 
 
+## ts_query_ls setup
+
+```fish
+# careful with .tsqueryrc.json file, if you have a single trailing comma, NOPE...
+# when having issues, run CLI directly and it will say "Could not parse the provided configuration"
+ts_query_ls check
+
+# no language object for xyz... check parser_install_directories and language_retrieval_patterns
+#  also aliases... in my case it seems to insist on the current repo name as the language (for queries dir)...
+#  so I have to map openai-harmony to just harmony (config)
+
+# FYI LS + coc.nvim:
+# completions based on built parser/language!!
+# * format! also avail via CLI:
+ts_query_ls format
+# * linter (diagnostics), also available in CLI:
+ts_query_ls lint
+
+```
+
