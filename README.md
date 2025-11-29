@@ -121,9 +121,12 @@ ts_query_ls check
 # FYI LS + coc.nvim:
 # completions based on built parser/language!!
 # * format! also avail via CLI:
-ts_query_ls format
+ts_query_ls format queries/
 # * linter (diagnostics), also available in CLI:
 ts_query_ls lint
+# btw you need to configure valid_captures in .tsqueryrc.json (else will get linter warnings)
+# * proifiling 
+ts_query_ls profile  # checks performance (run time) of each query and reports delays
 
 ```
 
