@@ -118,6 +118,9 @@ tree-sitter parse --cst test.harmony
 # add :cst below test name
 # this format allows verifying node text (not just node types/shapes)
 
+# FYI test a case w/o making a foo.harmony file:
+echo "<|start|>user<|message|>What time is it?<|end|>" | tree-sitter parse --cst
+
 ```
 
 
