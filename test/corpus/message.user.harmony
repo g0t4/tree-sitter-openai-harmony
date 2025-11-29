@@ -1,0 +1,12 @@
+==================
+User message
+==================
+<|start|>user<|message|>What time is it?<|end|>
+---
+(source_file
+  (message
+    (start_token)
+    header: (header_user)
+    (message_token)
+    content: (text)
+    (end_token)))
