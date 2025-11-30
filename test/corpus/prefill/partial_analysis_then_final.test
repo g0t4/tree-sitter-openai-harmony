@@ -1,0 +1,20 @@
+==================|||
+prefill => partial assistant analysis => then full assistant final response
+:language(harmony)
+==================|||
+<|channel|>analysis<|message|>{long chain of thought}<|end|><|start|>assistant<|channel|>final<|message|>here is the answer!<|end|>
+---|||
+(source_file
+  (model_response_to_start_assistant_prefill
+    (prefill_channel_analysis
+       (channel_token))
+     (message_token)
+     contents: (text)
+     (end_token))
+  (message
+     (start_token)
+     header: (header_assistant_final
+       (channel_token))
+     (message_token)
+     contents: (text)
+     (end_token)))

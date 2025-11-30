@@ -1,0 +1,16 @@
+==================|||
+prefill => assistant responds with partial on tool call message alone 
+:language(harmony)
+==================|||
+<|channel|>commentary to=functions.generate_file<|constrain|>json<|message|>{"template": "basic_html", "path": "index.html"}<|call|>
+---|||
+(source_file
+  (model_response_to_start_assistant_prefill
+    (prefill_channel_commentary_tool_call
+       (channel_token)
+       function_name: (function_name)
+       (constrain_token)
+       format: (text))
+     (message_token)
+     contents: (text)
+     (call_token)))
