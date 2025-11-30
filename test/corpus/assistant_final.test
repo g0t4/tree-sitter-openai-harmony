@@ -1,1 +1,15 @@
+==================
+standalone - assistant final message
+:language(harmony)
+==================
 <|start|>assistant<|channel|>final<|message|>2 + 2 = 4.<|return|>
+---
+(source_file
+    (message
+      (start_token)
+      header: (header_assistant_final
+        (channel_token)
+      )
+      (message_token)
+      contents: (text)
+      (return_token)))
