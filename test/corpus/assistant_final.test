@@ -1,5 +1,5 @@
 ==================
-standalone - assistant final message
+standalone - assistant final message with <|return|> (decode only, inference time stop token)
 :language(harmony)
 ==================
 <|start|>assistant<|channel|>final<|message|>2 + 2 = 4.<|return|>

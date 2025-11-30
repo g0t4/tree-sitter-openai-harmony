@@ -1,5 +1,5 @@
 ==================
-standalone - assistant final message
+standalone - assistant analysis message
 :language(harmony)
 ==================
 <|start|>assistant<|channel|>analysis<|message|>User asks: "What is 2 + 2?" Simple arithmetic. Provide answer.<|end|>
