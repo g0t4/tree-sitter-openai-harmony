@@ -1,1 +1,18 @@
+==================
+standalone - assistant commentary (tool call) message
+:language(harmony)
+==================
 <|start|>assistant<|channel|>commentary to=functions.generate_file<|constrain|>json<|message|>{"template": "basic_html", "path": "index.html"}<|call|>
+---
+(source_file
+    (message
+      (start_token)
+      header: (header_assistant_commentary
+        (channel_token)
+        function_name: (function_name)
+        (constrain_token)
+        format: (text)
+      )
+      (message_token)
+      contents: (text)
+      (call_token)))
