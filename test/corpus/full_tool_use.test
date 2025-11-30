@@ -62,7 +62,12 @@ format?: "celsius" | "fahrenheit", // default: celsius
   )
   (message
      (start_token)
-     header: (header_assistant_analysis)
+     header: (header_assistant_analysis
+        (channel_token)
+     )
+     (message_token)
+     contents: (text)
+     (end_token)
   )
   (message
      (start_token)
@@ -70,10 +75,20 @@ format?: "celsius" | "fahrenheit", // default: celsius
   )
   (message
      (start_token)
-     header: (header_tool_result)
+     header: (header_tool_result
+
+     )
+     (message_token)
+     contents: (text)
+     (end_token)
   )
   (message
      (start_token)
-     header: (header_assistant_final)
+     header: (header_assistant_final
+        (channel_token)
+     )
+     (message_token)
+     contents: (text)
+     (end_token)
   )
   )
