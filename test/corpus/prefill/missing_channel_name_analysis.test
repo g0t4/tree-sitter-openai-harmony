@@ -1,0 +1,14 @@
+==================|||
+prefill => channel "analysis" missing
+:language(harmony)
+==================|||
+<|channel|><|message|>User asks "Who is the current US president?" It's 2025, presumably current president is Joe Biden? Actually as of 2025-07-28, there was a 2024 election. In 2024, President is probably President Biden still? But we need up to date info. Let's browse to confirm.<|end|>
+---|||
+(source_file
+  (model_response_to_start_assistant_prefill
+    (prefill_channel_analysis
+       (channel_token)
+       (MISSING "analysis"))
+     (message_token)
+     contents: (text)
+     (end_token)))
