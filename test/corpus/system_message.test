@@ -1,0 +1,19 @@
+==================
+System message
+:language(harmony)
+==================
+<|start|>system<|message|>You are ChatGPT, a large language model trained by OpenAI.
+Knowledge cutoff: 2024-06
+Current date: 2025-06-28
+Reasoning: high
+# Valid channels: analysis, commentary, final. Channel must be included for every message.<|end|>
+---
+(source_file
+  (message
+    (start_token)
+    header: (header_system)
+    (message_token)
+    contents: (text)
+    (end_token)))
+
+; BTW, :InspectTree in the (input) node is a great way to check expectations!
