@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 keywords = ["incremental", "parsing", "tree-sitter", "harmony"]
 categories = ["parser-implementations", "parsing", "text-editors"]
-repository = "https://github.com/g0t4/tree-sitter-openai-harmony"
+repository = "https://github.com/g0t4/tree-sitter-harmony"
 edition = "2021"
 autoexamples = false
 

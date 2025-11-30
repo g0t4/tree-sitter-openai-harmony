@@ -1,14 +1,14 @@
 {
-  "name": "tree-sitter-openai-harmony",
+  "name": "tree-sitter-harmony",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://github.com/g0t4/tree-sitter-openai-harmony#readme",
+  "homepage": "https://github.com/g0t4/tree-sitter-harmony#readme",
   "bugs": {
-    "url": "https://github.com/g0t4/tree-sitter-openai-harmony/issues"
+    "url": "https://github.com/g0t4/tree-sitter-harmony/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/g0t4/tree-sitter-openai-harmony.git"
+    "url": "git+https://github.com/g0t4/tree-sitter-harmony.git"
   },
   "license": "MIT",
   "author": "Wes Higbee",

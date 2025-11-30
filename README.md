@@ -1,4 +1,4 @@
-## tree-sitter-openai-harmony
+## tree-sitter-harmony
 
 A tree-sitter parser for OpenAI's [harmony response format](https://github.com/openai/harmony)
 
@@ -28,7 +28,7 @@ A tree-sitter parser for OpenAI's [harmony response format](https://github.com/o
 ## Links
 
 - https://github.com/openai/harmony
-- https://cookbook.openai.com/articles/openai-harmony
+- https://cookbook.openai.com/articles/harmony
 
 
 ## tree-sitter CLI
@@ -138,7 +138,7 @@ ts_query_ls check
 
 # no language object for xyz... check parser_install_directories and language_retrieval_patterns
 #  also aliases... in my case it seems to insist on the current repo name as the language (for queries dir)...
-#  so I have to map openai-harmony to just harmony (config)
+#  so I have to map harmony to just harmony (config)
 
 # FYI LS + coc.nvim:
 # completions based on built parser/language!!

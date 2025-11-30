@@ -1,8 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/ribru17/ts_query_ls/refs/heads/master/schemas/config.json",
-  "parser_install_directories": [ "${HOME}/repos/github/g0t4/tree-sitter-openai-harmony/" ],
+  "parser_install_directories": [ "${HOME}/repos/github/g0t4/tree-sitter-harmony/" ],
   "parser_aliases": {
-    "openai-harmony": "harmony"
+    "harmony": "harmony"
   },
   "language_retrieval_patterns": [
     "tree\\-sitter\\-([^/]+)\\.wasm"

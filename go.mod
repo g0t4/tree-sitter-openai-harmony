@@ -1,4 +1,4 @@
-module github.com/g0t4/tree-sitter-openai-harmony
+module github.com/g0t4/tree-sitter-harmony
 
 go 1.22
 

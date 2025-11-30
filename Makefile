@@ -3,7 +3,7 @@ $(error Windows is not supported)
 endif
 
 LANGUAGE_NAME := tree-sitter-harmony
-HOMEPAGE_URL := https://github.com/g0t4/tree-sitter-openai-harmony
+HOMEPAGE_URL := https://github.com/g0t4/tree-sitter-harmony
 VERSION := 0.1.0
 
 # repository
