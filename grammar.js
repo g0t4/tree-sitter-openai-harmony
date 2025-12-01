@@ -15,7 +15,7 @@ module.exports = grammar({
     $.header,
     $.final_token,
     $.assistant_commentary,
-    $.assistant_commentary_recipient_in_commentary,
+    $.assistant_commentary_recipient_in_channel,
     $.assistant_commentary_recipient_in_role,
     $.constrain_format,
     $.message_content,
@@ -63,11 +63,11 @@ module.exports = grammar({
     role_tool: $ => seq("functions.", field("function_name", $.function_name)),
     function_name: $ => /[^\s<]+/,
 
-    assistant_commentary: $ => choice($.assistant_commentary_recipient_in_commentary, $.assistant_commentary_recipient_in_role),
+    assistant_commentary: $ => choice($.assistant_commentary_recipient_in_channel, $.assistant_commentary_recipient_in_role),
     //
     // PER spec, the recipient can be in either role or commentary:
     //    https://github.com/g0t4/harmony/blob/ec7606df9e87e3d0a1fec9f50928c1e407f0c438/docs/format.md?plain=1#L397
-    assistant_commentary_recipient_in_commentary: $ => seq(
+    assistant_commentary_recipient_in_channel: $ => seq(
       $.channel_token,
       "commentary",
       optional($.recipient_functions),
