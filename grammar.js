@@ -15,6 +15,8 @@ module.exports = grammar({
     $.header,
     $.final_token,
     $.assistant_commentary,
+    $.assistant_commentary_recipient_in_commentary,
+    $.assistant_commentary_recipient_in_role,
     $.constrain_format,
     $.message_content,
     $.recipient_functions,
@@ -61,13 +63,24 @@ module.exports = grammar({
     role_tool: $ => seq("functions.", field("function_name", $.function_name)),
     function_name: $ => /[^\s<]+/,
 
-    assistant_commentary: $ => seq(
+    assistant_commentary: $ => choice($.assistant_commentary_recipient_in_commentary, $.assistant_commentary_recipient_in_role),
+    //
+    // PER spec, the recipient can be in either role or commentary:
+    //    https://github.com/g0t4/harmony/blob/ec7606df9e87e3d0a1fec9f50928c1e407f0c438/docs/format.md?plain=1#L397
+    assistant_commentary_recipient_in_commentary: $ => seq(
       $.channel_token,
       "commentary",
-      optional(seq(/\s+/, $.recipient_functions, optional($.constrain_format)))
+      optional(seq(/\s+/, $.recipient_functions, optional($.constrain_format))),
       // ? does this work for preamble which is assistant_commentary w/o the to=functions.___ and instead just a regular message ending
       // - `<|start|>assistant<|channel|>commentary to=functions.get_current_weather <|constrain|>json<|message|>{"location":"San Francisco"}<|call|>`
     ),
+    assistant_commentary_recipient_in_role: $ => seq(
+      optional($.recipient_functions),
+      $.channel_token,
+      "commentary",
+      optional($.constrain_format)
+    ),
+    //
     recipient_functions: $ => seq("to=functions.", field("function_name", $.function_name)),
     constrain_format: $ => seq(
       $.constrain_token,

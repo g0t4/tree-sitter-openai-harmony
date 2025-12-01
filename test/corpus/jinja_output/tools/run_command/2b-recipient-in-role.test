@@ -12,8 +12,8 @@ assistant tool call - recipient IN ROLE (before <|channel|>commentary)
     (message
       (start_token)
       header: (header_assistant_commentary
-        (channel_token)
         function_name: (function_name)
+        (channel_token)
         (constrain_token)
         format: (text)
       )
