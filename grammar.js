@@ -75,12 +75,13 @@ module.exports = grammar({
       "commentary",
       optional($.recipient_functions),
       // ? does this work for preamble which is assistant_commentary w/o the to=functions.___ and instead just a regular message ending
-      // - `<|start|>assistant<|channel|>commentary to=functions.get_current_weather <|constrain|>json<|message|>{"location":"San Francisco"}<|call|>`
+      // - `<|start|>assistant<|channel|>commentary to=functions.get_current_weather <|constrain|>json<|message|>...`
     ),
     assistant_commentary_recipient_in_role: $ => seq(
       optional($.recipient_functions),
       $.channel_token,
       "commentary",
+      // - `<|start|>assistant to=functions.get_current_weather<|channel|>commentary<|constrain|>json<|message|>...`
     ),
     //
     recipient_functions: $ => seq("to=functions.", field("function_name", $.function_name)),
