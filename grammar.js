@@ -63,7 +63,10 @@ module.exports = grammar({
     role_tool: $ => seq("functions.", field("function_name", $.function_name)),
     function_name: $ => /[^\s<]+/,
 
-    assistant_commentary: $ => choice($.assistant_commentary_recipient_in_channel, $.assistant_commentary_recipient_in_role),
+    assistant_commentary: $ => seq(
+      choice($.assistant_commentary_recipient_in_channel, $.assistant_commentary_recipient_in_role),
+      optional($.constrain_format),
+    ),
     //
     // PER spec, the recipient can be in either role or commentary:
     //    https://github.com/g0t4/harmony/blob/ec7606df9e87e3d0a1fec9f50928c1e407f0c438/docs/format.md?plain=1#L397
@@ -71,7 +74,6 @@ module.exports = grammar({
       $.channel_token,
       "commentary",
       optional($.recipient_functions),
-      optional($.constrain_format),
       // ? does this work for preamble which is assistant_commentary w/o the to=functions.___ and instead just a regular message ending
       // - `<|start|>assistant<|channel|>commentary to=functions.get_current_weather <|constrain|>json<|message|>{"location":"San Francisco"}<|call|>`
     ),
@@ -79,7 +81,6 @@ module.exports = grammar({
       optional($.recipient_functions),
       $.channel_token,
       "commentary",
-      optional($.constrain_format)
     ),
     //
     recipient_functions: $ => seq("to=functions.", field("function_name", $.function_name)),
