@@ -15,9 +15,8 @@
   "type": "commonjs",
   "main": "grammar.js",
   "scripts": {
-    "generate": "tree-sitter generate",
-    "test": "tree-sitter generate && tree-sitter parse test.harmony",
-    "test-full": "tree-sitter generate && tree-sitter parse examples/tools/weather/5full.harmony"
+    "test": "tree-sitter generate && tree-sitter test",
+    "build": "tree-sitter generate && tree-sitter build && tree-sitter test"
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.25.10"
