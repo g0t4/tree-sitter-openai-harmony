@@ -52,6 +52,8 @@ module.exports = grammar({
     header_assistant_final: $ => seq("assistant", $.channel_token, "final"),
     header_assistant_commentary: $ => seq("assistant", $.assistant_commentary),
 
+    // TODO split out a field for channel name? to make it easier to target just that name node?  i.e. to color it or w/e
+    //    not a requirement but would better fit using format:/function_name: styles with other tag/value pairs
     prefill_channel_analysis: $ => seq($.channel_token, "analysis"),
     prefill_channel_final: $ => seq($.channel_token, "final"),
     prefill_channel_commentary_tool_call: $ => seq($.assistant_commentary),
