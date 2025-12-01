@@ -1,0 +1,23 @@
+===========================================================|||
+assistant tool call - recipient IN CHANNEL (after <|channel|>commentary)
+:language(harmony)
+===========================================================|||
+<|start|>assistant<|channel|>commentary to=functions.run_command<|constrain|>json<|message|>{"command":"date"}<|end|>
+-----------------------------------------------------------|||
+; per harmony spec:
+;    **The recipient might be defined in the role or channel section of the header.**
+;    https://github.com/g0t4/harmony/blob/ec7606d/docs/format.md#L397
+
+(source_file
+    (message
+      (start_token)
+      header: (header_assistant_commentary
+        (channel_token)
+        function_name: (function_name)
+        (constrain_token)
+        format: (text)
+      )
+      (message_token)
+      contents: (text)
+      (end_token))
+)
